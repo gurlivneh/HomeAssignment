@@ -5,17 +5,22 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux'
 import { beersSet } from '../redux/reducers/beersReducer';
 
-const Favorites = () => {
+const Favorites = (props) => {
     const beers = useSelector(state => state.beers)
     const dispatch = useDispatch()
+    const { openModal, setBeerId } = props
+    const handleCardClick = (index) => {
+        openModal()
+        setBeerId(index)
+    }
 
 
     return (
         <Container>
-            {beers && beers.map((item) => {
+            {beers && beers.map((item, index) => {
                 if (item.isFavorite) {
                     return (
-                        <BeerCard item={item} key={item.id} />
+                        <BeerCard item={item} key={item.id} handleCardClick={() => handleCardClick(index)}  />
                     )
                 }
             })}

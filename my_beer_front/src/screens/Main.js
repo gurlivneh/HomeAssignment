@@ -1,4 +1,3 @@
-import { list } from '../mock/Beers';
 import React, { useState, useEffect } from 'react';
 import BeerCard from '../components/BeerCard';
 import styled from 'styled-components';
@@ -6,40 +5,36 @@ import { useSelector, useDispatch } from 'react-redux'
 import { beersSet } from '../redux/reducers/beersReducer';
 import { searchBeersAndFood } from '../requests/Requests';
 
-const Main = () => {
+const Main = (props) => {
+    const { openModal, setBeerId } = props
     const beers = useSelector(state => state.beers)
     const dispatch = useDispatch()
     const [foodInput, setFoodInput] = useState("")
     const [pageNum, setPageNum] = useState(1)
 
-    // console.log('beers', beers)
-    // useEffect(() => {
-    //     if (beers.length === 0) {
-    //         searchBeersAndFood(1, 'sushi').then(res => {
-    //             dispatch(beersSet(res))
-
-    //         })
-    //     }
-    // }, []);
-
-    const handleChangeEvent = (e)  => {
+    const handleChangeEvent = (e) => {
         setFoodInput(e.target.value);
-      }
-      const handleSearchClick = ()  => {
+    }
+    const handleSearchClick = () => {
         searchBeersAndFood(pageNum, foodInput).then((res) => {
             dispatch(beersSet(res))
-        })      
+        })
+    }
+
+    const handleCardClick = (index) => {
+        openModal()
+        setBeerId(index)
     }
 
     return (
         <MainContainer>
-            Food Pairing:  
-            <Input onChange={handleChangeEvent}/>
-            <SearchButton onClick={handleSearchClick}>Search</SearchButton> 
+            Food Pairing:
+            <Input onChange={handleChangeEvent} />
+            <SearchButton onClick={handleSearchClick}>Search</SearchButton>
             <BeersContainer>
-                {beers && beers.map((item) => {
+                {beers && beers.map((item, index) => {
                     return (
-                        <BeerCard item={item} key={item.id} />
+                        <BeerCard item={item} key={item.id} handleCardClick={() => handleCardClick(index)} />
                     )
                 })}
             </BeersContainer>

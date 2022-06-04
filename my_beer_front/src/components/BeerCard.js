@@ -7,8 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 
 const BeerCard = (props) => {
-
-    const { item } = props
+    const { item, handleCardClick } = props
     const dispatch = useDispatch()
     const handleClick = () => {
         // dispatch(favoritesAdd({name: item.name, image_url:item.image_url, id:item.id}))
@@ -17,7 +16,7 @@ const BeerCard = (props) => {
     }
 
     return (
-        <Container>
+        <Container onClick={handleCardClick}>
             <Image src={item.image_url} />
             <Title>{item.name}</Title>
             { item.isFavorite ? <AiTwotoneStar style={{color:"yellow"}} onClick={handleClick}/> : <AiOutlineStar onClick={handleClick}/>}
