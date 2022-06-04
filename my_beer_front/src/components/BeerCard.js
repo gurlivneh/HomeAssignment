@@ -1,17 +1,26 @@
 import styled from 'styled-components';
 import React from 'react';
 import { AiOutlineStar, AiTwotoneStar } from 'react-icons/ai';
+import { favoritesAdd, favoritesRemove } from '../redux/reducers/favoritesReducer';
+import { beersUpdate } from '../redux/reducers/beersReducer';
+import { useSelector, useDispatch } from 'react-redux'
 
 
 const BeerCard = (props) => {
 
     const { item } = props
-    let isFavorite = false
+    const dispatch = useDispatch()
+    const handleClick = () => {
+        // dispatch(favoritesAdd({name: item.name, image_url:item.image_url, id:item.id}))
+        dispatch(beersUpdate(item.id))
+
+    }
+
     return (
         <Container>
             <Image src={item.image_url} />
             <Title>{item.name}</Title>
-            { isFavorite ? <AiTwotoneStar style={{color:"yellow"}}/> : <AiOutlineStar/>}
+            { item.isFavorite ? <AiTwotoneStar style={{color:"yellow"}} onClick={handleClick}/> : <AiOutlineStar onClick={handleClick}/>}
         </Container>
     )
 }
