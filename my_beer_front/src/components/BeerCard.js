@@ -1,25 +1,30 @@
 import styled from 'styled-components';
 import React from 'react';
 import { AiOutlineStar, AiTwotoneStar } from 'react-icons/ai';
-import { favoritesAdd, favoritesRemove } from '../redux/reducers/favoritesReducer';
-import { beersUpdate } from '../redux/reducers/beersReducer';
-import { useSelector, useDispatch } from 'react-redux'
-
+import { BiBeer } from "react-icons/bi";
+import { updateFavorites } from '../redux/reducers/beersReducer';
+import { useDispatch } from 'react-redux'
 
 const BeerCard = (props) => {
     const { item, handleCardClick } = props
     const dispatch = useDispatch()
     const handleClick = () => {
-        // dispatch(favoritesAdd({name: item.name, image_url:item.image_url, id:item.id}))
-        dispatch(beersUpdate(item.id))
-
+        dispatch(updateFavorites(item.id))
     }
 
     return (
-        <Container onClick={handleCardClick}>
-            <Image src={item.image_url} />
-            <Title>{item.name}</Title>
-            { item.isFavorite ? <AiTwotoneStar style={{color:"yellow"}} onClick={handleClick}/> : <AiOutlineStar onClick={handleClick}/>}
+        <Container>
+            <BeerContainer onClick={handleCardClick}>
+                {item.image_url ?
+                    <Image src={item.image_url} /> :
+                    <BiBeer style={{ height: "100px", width: "100px" }} />}
+                <Title>{item.name}</Title>
+            </BeerContainer>
+            <ButtonContainer>
+                {item.isFavorite ?
+                    <AiTwotoneStar style={{ color: "yellow" }} onClick={handleClick} /> :
+                    <AiOutlineStar onClick={handleClick} />}
+            </ButtonContainer>
         </Container>
     )
 }
@@ -28,13 +33,30 @@ export default BeerCard
 
 const Container = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color:white;
-    flex-direction:column;
+    background-color:lightskyblue;
     height: 400px;
     width: 300px;
     margin: 5px;
+    padding:5px;
+`;
+
+const BeerContainer = styled.div`
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content:center;
+    width:99%;
+
+`;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content:center;
+    height:5%;
+    width: 5%;
+
 `;
 
 const Title = styled.h4`

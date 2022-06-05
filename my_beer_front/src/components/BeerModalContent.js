@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 import React from 'react';
-import { AiOutlineStar, AiTwotoneStar } from 'react-icons/ai';
-import { favoritesAdd, favoritesRemove } from '../redux/reducers/favoritesReducer';
-import { beersUpdate } from '../redux/reducers/beersReducer';
-import { useSelector, useDispatch } from 'react-redux'
-
+import { useSelector } from 'react-redux'
 
 const BeerModalContent = (props) => {
-    const { item, beerId } = props
+    const { beerId, closeModal } = props
     const beers = useSelector(state => state.beers)
 
+    const handleClosePress = () => {
+        closeModal()
+    }
 
     return (
         <Container>
@@ -17,22 +16,22 @@ const BeerModalContent = (props) => {
             <Title>ABV: {beers[beerId].abv}</Title>
             <Title>PH: {beers[beerId].ph}</Title>
             <Title>SRM: {beers[beerId].srm}</Title>
-            <Title> IBU: {beers[beerId].ibu}</Title>
+            <Title>IBU: {beers[beerId].ibu}</Title>
+            <Button onClick={handleClosePress}>CLOSE</Button>
         </Container>
     )
 }
 
 export default BeerModalContent
 
-const Container = styled.button`
+const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:gray;
+    background-color:grey;
     flex-direction:column;
-    height: 600px;
+    height: 470px;
     width: 400px;
-    margin: 5px;
 `;
 
 const Title = styled.h4`
@@ -40,7 +39,10 @@ const Title = styled.h4`
     font-size: 14;
 `;
 
-const Image = styled.img`
-   height: 200px;
-   width: 80px;
+const Button = styled.button`
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 100px;
+    margin: 10px;
 `;

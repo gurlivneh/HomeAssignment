@@ -1,11 +1,11 @@
-import MyRouter from './navigation/MyRouter';
+import RouterWithModal from './navigation/RouterWithModal';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
 function App() {
   return (
     <Provider store={store}>
-      <MyRouter />
+      <RouterWithModal />
     </Provider>
   );
 }

@@ -6,7 +6,7 @@ import { beersSet } from '../redux/reducers/beersReducer';
 import { searchBeersAndFood } from '../requests/Requests';
 
 const Main = (props) => {
-    const { openModal, setBeerId } = props
+    const { openModal, setBeerId, setModalType } = props
     const beers = useSelector(state => state.beers)
     const dispatch = useDispatch()
     const [foodInput, setFoodInput] = useState("")
@@ -22,6 +22,7 @@ const Main = (props) => {
     }
 
     const handleCardClick = (index) => {
+        setModalType("beer")
         openModal()
         setBeerId(index)
     }
@@ -45,8 +46,8 @@ const Main = (props) => {
 export default Main
 
 const MainContainer = styled.div`
-    background-color: green;
-    padding: 20px;
+    background-color: white;
+    padding: 10px;
     justify-content: center;
     align-items: center;
 
@@ -58,24 +59,22 @@ const BeersContainer = styled.div`
     flex-wrap:wrap;
     justify-content: space-evenly;
     align-items: center;
-    background-color: gray;
+    background-color: white;
+    padding:10px;
+
 `;
 
 const Input = styled.input`
     align-items: center;
     justify-content: center;
-    /* background-color: blue; */
     height: 30px;
     width: 150px;
     margin: 10px;
-
-   
 `;
 
 const SearchButton = styled.button`
     align-items: center;
     justify-content: center;
-    /* background-color: blueviolet; */
     height: 25px;
     width: 100px;
     margin: 10px;
