@@ -4,7 +4,6 @@ import {
   Routes,
   Route,
   Link,
-  useParams 
 } from "react-router-dom";
 import Main from "../screens/Main";
 import Favorites from "../screens/Favorites";
@@ -19,9 +18,7 @@ const RouterWithModal = () => {
   const [modalType, setModalType] = useState("beer");
   const [beerId, setBeerId] = useState();
   const [showRemoveButton, setShowRemoveButton] = useState(false)
-  let params = useParams();
 
-console.log('params', params)
   const openModal = () => {
     setIsOpen(true);
   }

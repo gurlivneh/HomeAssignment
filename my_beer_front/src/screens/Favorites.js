@@ -13,7 +13,7 @@ const Favorites = (props) => {
         } else {
             setShowRemoveButton(false)
         }
-    }, [favorites]);
+    }, [ favorites, setShowRemoveButton ]);
 
     const handleCardClick = (index) => {
         setModalType("beer")

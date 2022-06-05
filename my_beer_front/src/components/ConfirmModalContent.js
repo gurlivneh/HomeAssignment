@@ -6,13 +6,12 @@ import { useDispatch } from 'react-redux'
 
 const ConfirmModalContent = (props) => {
 
-    const { closeModal, setShowRemoveButton } = props
+    const { closeModal } = props
     const dispatch = useDispatch()
 
     const handleOkPress = () => {
         dispatch(removeAllFromFavorite())
         dispatch(favoritesDeleteAll())
-        // setShowRemoveButton(false)
         closeModal()
     }
     const handleCancelPress = () => {

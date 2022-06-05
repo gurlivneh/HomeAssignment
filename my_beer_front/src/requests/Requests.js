@@ -8,11 +8,11 @@ const _request = (type, method, data) => {
         if (method === 'GET') {
             axios.get(BASE_URL + type)
                 .then((response) => {
-                    console.log('res GET', response);
+                    console.log('res GET', response)
                     resolve(response.data)
                 })
                 .catch((error) => {
-                    console.log('err get', error);
+                    console.log('err get', error)
                     resolve({isError:true})
                 })
         }
@@ -20,12 +20,15 @@ const _request = (type, method, data) => {
         if (method === 'POST') {
             axios.post(BASE_URL + type, data)  
                 .then((response) => {
-                    console.log('res POST', response.data);
+                    console.log('res POST', response.data)
                     resolve(response.data)
 
                 })
                 .catch((error) => {
-                    console.log('err post', error);
+                    console.log('err post', error)
+                    resolve({isError:true})
+
+                    
                 })
         }
     })

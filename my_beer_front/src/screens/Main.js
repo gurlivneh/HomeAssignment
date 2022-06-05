@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import BeerCard from '../components/BeerCard';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux'
-import { beersSet, updateFavorites } from '../redux/reducers/beersReducer';
+import { beersSet } from '../redux/reducers/beersReducer';
 import { searchBeersAndFood } from '../requests/Requests';
 
 const Main = (props) => {
