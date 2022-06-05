@@ -3,7 +3,6 @@ const BASE_URL = `https://api.punkapi.com/v2/beers`
 
 
 const _request = (type, method, data) => {
-    // console.log('type', type, 'method', method, 'data', data)
     return new Promise((resolve, reject) => {
 
         if (method === 'GET') {
@@ -14,7 +13,7 @@ const _request = (type, method, data) => {
                 })
                 .catch((error) => {
                     console.log('err get', error);
-                    resolve(error)
+                    resolve({isError:true})
                 })
         }
 
@@ -36,25 +35,6 @@ export const searchBeersAndFood = (pageNum, foodMatch) => {
     return _request(`?page=${pageNum}&per_page=6&food=${foodMatch}`, 'GET')
 
 }
-// export const addFavorite = (data) => {
-//     return _request(`add`, 'POST', data)
-
-// }
-
-// export const removeFavorite = (data) => {
-//     return _request(`remove`, 'POST', data)
-
-// } 
-
-// export const login = (data) => {
-//     return _request(`login`, 'POST', data)
-
-// }
-
-// export const register = (data) => {
-//     return _request(`register`, 'POST', data)
-
-// }
 
 
 

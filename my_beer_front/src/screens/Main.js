@@ -26,6 +26,11 @@ const Main = (props) => {
         if (foodInput) {
             setPageNum(1)
             searchBeersAndFood(1, foodInput).then((res) => {
+                if (res.length === 0 || res.isError) {
+                    setModalType("error")
+                    openModal()
+                    return
+                }
                 if(res.length > 0){
                 dispatch(beersSet({ beers: res, favorites: favorites }))
                 setDisplayShowMore(true)
