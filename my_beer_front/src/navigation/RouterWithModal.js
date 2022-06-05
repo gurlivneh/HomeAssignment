@@ -1,10 +1,10 @@
-import React ,{ useState } from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Link,
-  useSearchParams
+  useParams 
 } from "react-router-dom";
 import Main from "../screens/Main";
 import Favorites from "../screens/Favorites";
@@ -19,8 +19,9 @@ const RouterWithModal = () => {
   const [modalType, setModalType] = useState("beer");
   const [beerId, setBeerId] = useState();
   const [showRemoveButton, setShowRemoveButton] = useState(false)
+  let params = useParams();
 
-
+console.log('params', params)
   const openModal = () => {
     setIsOpen(true);
   }
@@ -29,7 +30,6 @@ const RouterWithModal = () => {
     setIsOpen(false);
   }
 
-
   return (
     <MainContainer>
       <Modal
@@ -37,18 +37,26 @@ const RouterWithModal = () => {
         onRequestClose={closeModal}
         style={ModalCustomStyles}
         ariaHideApp={false}
-        >
-        {modalType === "beer" && <BeerModalContent beerId={beerId} closeModal={closeModal}/>}
-        {modalType === "error" && <ErrorModalContent closeModal={closeModal}/>}
-        {modalType === "confirm" && <ConfirmModalContent closeModal={closeModal} setShowRemoveButton={setShowRemoveButton}/>}
+      >
+        {modalType === "beer" && <BeerModalContent beerId={beerId} closeModal={closeModal} />}
+        {modalType === "error" && <ErrorModalContent closeModal={closeModal} />}
+        {modalType === "confirm" && <ConfirmModalContent closeModal={closeModal} setShowRemoveButton={setShowRemoveButton} />}
       </Modal>
       <Router>
         <NavContainer>
           <Title>My Beer Buddy</Title>
-          <Link to="/">Main</Link>
-          <Link to="/favorites">Favorites</Link>
+          <NavDiv>
+            <Link to={"/"}>
+              Main
+            </Link>
+          </NavDiv>
+          <NavDiv>
+            <Link to={"/favorites"}>
+              Favorites
+            </Link>
+          </NavDiv>
         </NavContainer>
-        <Routes>
+        <Routes>S
           <Route
             path="/"
             element={
@@ -65,10 +73,10 @@ const RouterWithModal = () => {
                 openModal={openModal}
                 closeModal={closeModal}
                 setModalType={setModalType}
-                setBeerId={setBeerId} 
+                setBeerId={setBeerId}
                 setShowRemoveButton={setShowRemoveButton}
                 showRemoveButton={showRemoveButton}
-                />}
+              />}
           />
         </Routes>
       </Router>
@@ -100,6 +108,11 @@ const Title = styled.h4`
     font-size: 14;
 `;
 
+const NavDiv = styled.div`
+    align-items: center;
+    justify-content: center;
+    display:flex;
+`;
 
 const ModalCustomStyles = {
   content: {
@@ -109,6 +122,6 @@ const ModalCustomStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    height:'60%'
+    height: '60%'
   },
 };
