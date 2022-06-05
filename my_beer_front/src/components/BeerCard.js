@@ -45,6 +45,8 @@ const Container = styled.div`
     width: 300px;
     margin: 5px;
     padding:5px;
+    cursor: pointer;
+
 `;
 
 const BeerContainer = styled.div`

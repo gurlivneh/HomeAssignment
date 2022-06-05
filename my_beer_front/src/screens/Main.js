@@ -11,16 +11,27 @@ const Main = (props) => {
     const favorites = useSelector(state => state.favorites)
     const dispatch = useDispatch()
     const [foodInput, setFoodInput] = useState("")
-    const [pageNum, setPageNum] = useState(1)
+    const [pageNum, setPageNum] = useState(0)
+    const [displayShowMore, setDisplayShowMore] = useState(false)
+
 
 
     const handleChangeEvent = (e) => {
+        setPageNum(0)
         setFoodInput(e.target.value);
+        setDisplayShowMore(false)
+
     }
     const handleSearchClick = () => {
-        searchBeersAndFood(pageNum, foodInput).then((res) => {
-            dispatch(beersSet({beers:res, favorites:favorites}))
-        })
+        if (foodInput) {
+            setPageNum(1)
+            searchBeersAndFood(1, foodInput).then((res) => {
+                if(res.length > 0){
+                dispatch(beersSet({ beers: res, favorites: favorites }))
+                setDisplayShowMore(true)
+                }
+            })
+        }
     }
 
     const handleCardClick = (index) => {
@@ -29,18 +40,38 @@ const Main = (props) => {
         setBeerId(index)
     }
 
+    const handleShowMoreClick = () => {
+        let num = pageNum
+        if (foodInput) {
+            num++
+            setPageNum(num)
+            searchBeersAndFood(num, foodInput).then((res) => {
+                if (res.length === 0) {
+                    setPageNum(1)
+                    searchBeersAndFood(1, foodInput).then((res) => {
+                        dispatch(beersSet({ beers: res, favorites: favorites }))
+                    })
+                } else {
+                    dispatch(beersSet({ beers: res, favorites: favorites }))
+
+                }
+            })
+        }
+    }
+
     return (
         <MainContainer>
             Food Pairing:
             <Input onChange={handleChangeEvent} />
             <SearchButton onClick={handleSearchClick}>Search</SearchButton>
             <BeersContainer>
-                {beers && beers.map((item, index) => {
+                {beers.length > 0 && beers.map((item, index) => {
                     return (
                         <BeerCard item={item} key={item.name} handleCardClick={() => handleCardClick(index)} />
                     )
                 })}
             </BeersContainer>
+            {displayShowMore && <Title onClick={handleShowMoreClick}>SHOW MORE - {pageNum}</Title>}
         </MainContainer>
     )
 }
@@ -54,6 +85,17 @@ const MainContainer = styled.div`
     align-items: center;
 
 `;
+const Title = styled.div`
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+    /* background-color:yellow; */
+    display: flex;
+    cursor: pointer;
+`;
+
+
 
 
 const BeersContainer = styled.div`
