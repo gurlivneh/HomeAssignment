@@ -37,7 +37,7 @@ const Favorites = (props) => {
             <BeersContainer>
                 {favorites && favorites.map((item, index) => {
                     return (
-                        <BeerCard item={item} key={item.name} handleCardClick={() => handleCardClick(index)} isFavorite={true}/>
+                        <BeerCard item={item} key={item.name} handleCardClick={() => handleCardClick(index)} isFavoriteScreen={true}/>
 
                     )
                 })}

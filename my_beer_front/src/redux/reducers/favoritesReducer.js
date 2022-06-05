@@ -14,6 +14,21 @@ const favoritesSlice = createSlice({
       state = []
       return state
     },
+    favoriteGrade(state, action) {
+      console.log("fav grade", action.payload)
+      for (let i = 0; i < state.length; i++) {
+        if (state[i].name === action.payload.name) {
+          console.log('state[i].name', state[i].name)
+
+          state[i].grade = action.payload.grade
+          console.log(state[i].grade)
+          break;
+        }
+      }
+      
+      return state
+    },
+    
     favoritesRemove(state, action) {
       for (let i = 0; i < state.length; i++) {
         if (state[i].name === action.payload) {
@@ -21,11 +36,11 @@ const favoritesSlice = createSlice({
           break;
         }
       }
-      console.log('favoritesRemove', state, action)
+      
       return state
     }
   }
 })
 
-export const { favoritesAdd, favoritesRemove, favoritesDeleteAll} = favoritesSlice.actions
+export const { favoritesAdd, favoritesRemove, favoritesDeleteAll, favoriteGrade} = favoritesSlice.actions
 export default favoritesSlice.reducer
