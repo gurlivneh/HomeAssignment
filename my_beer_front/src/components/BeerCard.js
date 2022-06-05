@@ -3,13 +3,20 @@ import React from 'react';
 import { AiOutlineStar, AiTwotoneStar } from 'react-icons/ai';
 import { BiBeer } from "react-icons/bi";
 import { updateFavorites } from '../redux/reducers/beersReducer';
+import { favoritesAdd, favoritesRemove } from '../redux/reducers/favoritesReducer';
 import { useDispatch } from 'react-redux'
 
 const BeerCard = (props) => {
     const { item, handleCardClick } = props
     const dispatch = useDispatch()
     const handleClick = () => {
-        dispatch(updateFavorites(item.id))
+        if(item.isFavorite || props.isFavorite) {
+            dispatch(favoritesRemove(item.name))
+        }
+        else {
+            dispatch(favoritesAdd(item))
+        }
+        dispatch(updateFavorites(item.name))
     }
 
     return (
@@ -21,7 +28,7 @@ const BeerCard = (props) => {
                 <Title>{item.name}</Title>
             </BeerContainer>
             <ButtonContainer>
-                {item.isFavorite ?
+                {item.isFavorite ||  props.isFavorite ?
                     <AiTwotoneStar style={{ color: "yellow" }} onClick={handleClick} /> :
                     <AiOutlineStar onClick={handleClick} />}
             </ButtonContainer>
@@ -34,7 +41,7 @@ export default BeerCard
 const Container = styled.div`
     display: flex;
     background-color:lightskyblue;
-    height: 400px;
+    height: 350px;
     width: 300px;
     margin: 5px;
     padding:5px;

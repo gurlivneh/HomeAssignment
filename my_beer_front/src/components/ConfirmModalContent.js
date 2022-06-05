@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { removeAllFromFavorite } from '../redux/reducers/beersReducer';
+import { favoritesDeleteAll } from '../redux/reducers/favoritesReducer';
 import { useDispatch } from 'react-redux'
 
 const ConfirmModalContent = (props) => {
@@ -10,7 +11,8 @@ const ConfirmModalContent = (props) => {
 
     const handleOkPress = () => {
         dispatch(removeAllFromFavorite())
-        setShowRemoveButton(false)
+        dispatch(favoritesDeleteAll())
+        // setShowRemoveButton(false)
         closeModal()
     }
     const handleCancelPress = () => {

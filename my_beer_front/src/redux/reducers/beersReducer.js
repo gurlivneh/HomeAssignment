@@ -4,19 +4,29 @@ const beersSlice = createSlice({
   initialState: [],
   reducers: {
     beersSet(state, action) {
-      state = action.payload
+      let beers = action.payload.beers
+      let favorites = action.payload.favorites
+      beers.forEach(item => {
+        favorites.forEach(el => {
+          if(item.name === el.name) {
+              item.isFavorite = true
+          } else {
+            item.favorite = false
+          }
+        })
+      })
+      state = beers
       return state
     },
     updateFavorites(state, action) {
-      let id = action.payload
+      let name = action.payload
       state.forEach((element) => {
-        if (element.id === id) {
+        if (element.name === name) {
           if (element.isFavorite) {
             element.isFavorite = false
           } else {
             element.isFavorite = true
           }
-          return
         }
       })
       return state

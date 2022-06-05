@@ -4,13 +4,16 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux'
 
 const Favorites = (props) => {
-    const beers = useSelector(state => state.beers)
+    const favorites = useSelector(state => state.favorites)
     const { openModal, setBeerId, setModalType, setShowRemoveButton, showRemoveButton } = props
 
     useEffect(() => {
-        let indexOf = beers.indexOf(i => i.isFavorite === true)
-        if (indexOf === -1) {setShowRemoveButton(false)}
-      }, [beers]);
+        if (favorites.length > 0) {
+            setShowRemoveButton(true)
+        } else {
+            setShowRemoveButton(false)
+        }
+    }, [favorites]);
 
     const handleCardClick = (index) => {
         setModalType("beer")
@@ -25,20 +28,18 @@ const Favorites = (props) => {
 
     return (
         <MainContainer>
-            <RemoveButton 
-            onClick={handleRemoveClick}
-            showRemoveButton={showRemoveButton}
+            <RemoveButton
+                onClick={handleRemoveClick}
+                showRemoveButton={showRemoveButton}
             >
                 Remove All
             </RemoveButton>
             <BeersContainer>
-                {beers && beers.map((item, index) => {
-                    if (item.isFavorite) {
-                        if(!showRemoveButton) { setShowRemoveButton(true) }
-                        return (
-                            <BeerCard item={item} key={item.id} handleCardClick={() => handleCardClick(index)} />
-                        )
-                    }
+                {favorites && favorites.map((item, index) => {
+                    return (
+                        <BeerCard item={item} key={item.name} handleCardClick={() => handleCardClick(index)} isFavorite={true}/>
+
+                    )
                 })}
             </BeersContainer>
         </MainContainer>
@@ -70,6 +71,6 @@ const RemoveButton = styled.button`
     width: 100px;
     margin: 10px;
     margin-left:150px;
-    visibility: ${props=>props.showRemoveButton ? "visible" : "hidden"};
+    visibility: ${props => props.showRemoveButton ? "visible" : "hidden"};
 `;
 

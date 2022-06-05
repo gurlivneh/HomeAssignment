@@ -2,22 +2,24 @@ import React, { useState, useEffect } from 'react';
 import BeerCard from '../components/BeerCard';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux'
-import { beersSet } from '../redux/reducers/beersReducer';
+import { beersSet, updateFavorites } from '../redux/reducers/beersReducer';
 import { searchBeersAndFood } from '../requests/Requests';
 
 const Main = (props) => {
     const { openModal, setBeerId, setModalType } = props
     const beers = useSelector(state => state.beers)
+    const favorites = useSelector(state => state.favorites)
     const dispatch = useDispatch()
     const [foodInput, setFoodInput] = useState("")
     const [pageNum, setPageNum] = useState(1)
+
 
     const handleChangeEvent = (e) => {
         setFoodInput(e.target.value);
     }
     const handleSearchClick = () => {
         searchBeersAndFood(pageNum, foodInput).then((res) => {
-            dispatch(beersSet(res))
+            dispatch(beersSet({beers:res, favorites:favorites}))
         })
     }
 
@@ -35,7 +37,7 @@ const Main = (props) => {
             <BeersContainer>
                 {beers && beers.map((item, index) => {
                     return (
-                        <BeerCard item={item} key={item.id} handleCardClick={() => handleCardClick(index)} />
+                        <BeerCard item={item} key={item.name} handleCardClick={() => handleCardClick(index)} />
                     )
                 })}
             </BeersContainer>
